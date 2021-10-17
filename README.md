@@ -1,6 +1,6 @@
 # Проект: Место / landing / Проектная работа для ЯндексПрактикум
 
-- [Ссылка на сайт](#)
+- [Ссылка на сайт](https://gruf1.github.io/mesto/)
 - [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
 ## Стек технологий
