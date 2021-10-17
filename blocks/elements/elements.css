@@ -1,0 +1,10 @@
+.elements {
+  width: 100%;
+  padding: 50px 0 0 0;
+}
+
+@media (max-width: 860px) {
+  .elements {
+    padding: 36px 0 0;
+  }
+}

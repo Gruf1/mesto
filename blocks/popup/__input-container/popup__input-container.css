@@ -1,0 +1,14 @@
+.popup__input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0 0 48px;
+  gap: 30px;
+  border: none;
+}
+
+@media (max-width: 620px) {
+  .popup__input-container {
+    margin: 0 0 45px;
+  }
+}

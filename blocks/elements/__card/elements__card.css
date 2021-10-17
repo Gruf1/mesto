@@ -1,0 +1,15 @@
+.elements__card {
+  max-width: 282px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: 282px 1fr;
+  grid-gap: 25px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+@media (max-width: 920px) {
+  .elements__card {
+    min-width: 282px;
+  }
+}
