@@ -1,4 +1,4 @@
-.popup__button_submit {
+.popup__button_type_submit {
   width: 100%;
   min-height: 50px;
   font-size: 18px;
@@ -9,12 +9,12 @@
   border-radius: 2px;
 }
 
-.popup__button_submit:hover {
+.popup__button_type_submit:hover {
   opacity: 0.8;
 }
 
 @media (max-width: 620px) {
-  .popup__button_submit {
+  .popup__button_type_submit {
     font-size: 14px;
     line-height: 17px;
     min-height: 46px;

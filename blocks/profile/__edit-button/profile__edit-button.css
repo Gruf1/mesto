@@ -6,6 +6,7 @@
   padding: 10px;
   border: 1px solid #ffffff;
   align-self: center;
+  width: 22px;
 }
 
 .profile__edit-button:hover {
