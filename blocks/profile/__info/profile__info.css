@@ -14,6 +14,6 @@
     max-width: 88%;
     grid-template-columns: minmax(min-content, 189px) min-content;
     margin: 0 auto 36px;
-    gap: 14px;
+    gap: 10px;
   }
 }
