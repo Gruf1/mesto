@@ -1,11 +1,11 @@
-const popup = document.querySelector('.popup');
-const popupContainer = popup.querySelector('.popup__container');
+const popupContainer = document.querySelector('.popup__container');
+const elementSection = document.querySelector('.elements');
 const popupProfileEdit = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const popupImage = document.querySelector('.popup_type_image');
 const profile = document.querySelector('.profile');
 const cardsContainer = document.querySelector('.elements__list');
-const profileForm = popup.querySelector('.popup__form');
+const profileForm = document.querySelector('.popup__form');
 const newCardForm = popupAddCard.querySelector('.popup__form');
 const nameInput = popupContainer.querySelector('.popup__item_type_name');
 const workInput = popupContainer.querySelector('.popup__item_type_work');
@@ -13,11 +13,13 @@ const profileName = profile.querySelector('.profile__name');
 const profileWork = profile.querySelector('.profile__work');
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.profile__add-button')
-const closeButtonProfile = popup.querySelector('.popup__button_type_close');
+const closeButtonProfile = document.querySelector('.popup__button_type_close');
 const closeButtonAddCard = popupAddCard.querySelector('.popup__button_type_close');
 const image = popupImage.querySelector('.popup__image');
 const imageCaption = popupImage.querySelector('.popup__caption');
 const closeButtonImage = popupImage.querySelector('.popup__button_type_close');
+const title = document.querySelector('.popup__item_type_title');
+const picture = document.querySelector('.popup__item_type_link');
 
 const initialCards = [
   {
@@ -53,13 +55,13 @@ function renderCard() {
 }
 renderCard();
 
-function createCard(cardTitle, cardLink) {
+function getCard(cardTitle, cardLink) {
   const cardTemplate = document.querySelector('.card-template').content;
   const card = cardTemplate.querySelector('.elements__card').cloneNode(true);
+  const image = card.querySelector('.elements__pic');
 
   card.querySelector('.elements__title').textContent = cardTitle;
-  card.querySelector('.elements__pic').src = cardLink;
-  cardsContainer.prepend(card);
+  image.src = cardLink;
 
   const deleteButton = card.querySelector('.elements__delete-button');
   deleteButton.addEventListener('click', function(evt) {
@@ -71,18 +73,21 @@ function createCard(cardTitle, cardLink) {
     evt.target.classList.toggle('elements__like-button_active');
   });
 
-  const picture = document.querySelector('.elements__pic');
-  picture.addEventListener('click', () => {
+  image.addEventListener('click', () => {
     image.src = cardLink;
     imageCaption.textContent = cardTitle;
     openPopup(popupImage);
   });
+  return card;
+}
+
+function createCard(cardTitle, cardLink) {
+  const card = getCard(cardTitle, cardLink);
+  cardsContainer.prepend(card);
 }
 
 function addCard(evt) {
   evt.preventDefault();
-  const title = document.querySelector('.popup__item_type_title');
-  const picture = document.querySelector('.popup__item_type_link');
 
   createCard(title.value, picture.value);
 
@@ -92,10 +97,6 @@ function addCard(evt) {
 }
 
 function openPopup(popup) {
-  if (popup === popupProfileEdit) {
-    nameInput.value = profileName.textContent;
-    workInput.value = profileWork.textContent;
-  }
   popup.classList.add('popup_open');
 }
 
@@ -113,7 +114,11 @@ function closePopup(popup) {
 newCardForm.addEventListener('submit', addCard);
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addButton.addEventListener('click', () => openPopup(popupAddCard));
-editButton.addEventListener('click', () => openPopup(popupProfileEdit));
+editButton.addEventListener('click', () => {
+  nameInput.value = profileName.textContent;
+  workInput.value = profileWork.textContent;
+  openPopup(popupProfileEdit)
+});
 closeButtonProfile.addEventListener('click', () => closePopup(popupProfileEdit));
 closeButtonAddCard.addEventListener('click', () => closePopup(popupAddCard));
 closeButtonImage.addEventListener('click', () => closePopup(popupImage));
