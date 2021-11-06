@@ -15,11 +15,11 @@ const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.profile__add-button')
 const closeButtonProfile = document.querySelector('.popup__button_type_close');
 const closeButtonAddCard = popupAddCard.querySelector('.popup__button_type_close');
-const image = popupImage.querySelector('.popup__image');
-const imageCaption = popupImage.querySelector('.popup__caption');
+const picture = popupImage.querySelector('.popup__image');
+const pictureCaption = popupImage.querySelector('.popup__caption');
 const closeButtonImage = popupImage.querySelector('.popup__button_type_close');
 const title = document.querySelector('.popup__item_type_title');
-const picture = document.querySelector('.popup__item_type_link');
+const photo = document.querySelector('.popup__item_type_link');
 
 const initialCards = [
   {
@@ -62,6 +62,7 @@ function getCard(cardTitle, cardLink) {
 
   card.querySelector('.elements__title').textContent = cardTitle;
   image.src = cardLink;
+  image.alt = cardTitle;
 
   const deleteButton = card.querySelector('.elements__delete-button');
   deleteButton.addEventListener('click', function(evt) {
@@ -74,8 +75,8 @@ function getCard(cardTitle, cardLink) {
   });
 
   image.addEventListener('click', () => {
-    image.src = cardLink;
-    imageCaption.textContent = cardTitle;
+    picture.src = cardLink;
+    pictureCaption.textContent = cardTitle;
     openPopup(popupImage);
   });
   return card;
@@ -89,10 +90,10 @@ function createCard(cardTitle, cardLink) {
 function addCard(evt) {
   evt.preventDefault();
 
-  createCard(title.value, picture.value);
+  createCard(title.value, photo.value);
 
   title.value = '';
-  picture.value = '';
+  photo.value = '';
   closePopup(popupAddCard);
 }
 
