@@ -5,8 +5,8 @@ const popupAddCard = document.querySelector('.popup_type_add-card');
 const popupImage = document.querySelector('.popup_type_image');
 const profile = document.querySelector('.profile');
 const cardsContainer = document.querySelector('.elements__list');
-const profileForm = document.querySelector('.popup__form');
-const newCardForm = popupAddCard.querySelector('.popup__form');
+const profileForm = document.forms.user;
+const newCardForm = document.forms.card;
 const nameInput = popupContainer.querySelector('.popup__item_type_name');
 const workInput = popupContainer.querySelector('.popup__item_type_work');
 const profileName = profile.querySelector('.profile__name');
@@ -20,33 +20,44 @@ const pictureCaption = popupImage.querySelector('.popup__caption');
 const closeButtonImage = popupImage.querySelector('.popup__button_type_close');
 const title = document.querySelector('.popup__item_type_title');
 const photo = document.querySelector('.popup__item_type_link');
+const popups = [...document.querySelectorAll('.popup')];
 
 const initialCards = [
-  {
-    name: 'Thomas Mraz',
-    link: 'https://www.sobaka.ru/images/image/01/37/34/73/_normal.jpg'
-  },
-  {
-    name: 'Spirit TI10 Champions',
-    link: 'https://hb.bizmrg.com/cybersportru-media/43/43333e4d2d3856d754fd9cc0143b0a3a.jpg'
-  },
-  {
-    name: 'Metro 2033',
-    link: 'https://i.pinimg.com/originals/67/fe/e9/67fee9f81bc64485717e77cea285a5cd.jpg'
-  },
-  {
-    name: 'My favorite film',
-    link: 'https://cdn.smartfacts.ru/215225/interstellar_0.jpg'
-  },
-  {
-    name: 'Fnatic are Champions',
-    link: 'https://egamersworld.com/uploads/news/1520280638409-1.jpg'
-  },
-  {
-    name: 'Oxxymiron',
-    link: 'https://lastfm.freetls.fastly.net/i/u/770x0/f644836eef0c2c048c30079c842c9a57.jpg'
+  { name: 'Thomas Mraz', link: 'https://www.sobaka.ru/images/image/01/37/34/73/_normal.jpg'},
+  { name: 'Spirit TI10 Champions', link: 'https://hb.bizmrg.com/cybersportru-media/43/43333e4d2d3856d754fd9cc0143b0a3a.jpg'},
+  { name: 'Metro 2033', link: 'https://i.pinimg.com/originals/67/fe/e9/67fee9f81bc64485717e77cea285a5cd.jpg'},
+  { name: 'My favorite film', link: 'https://cdn.smartfacts.ru/215225/interstellar_0.jpg'},
+  { name: 'Fnatic are Champions', link: 'https://egamersworld.com/uploads/news/1520280638409-1.jpg'},
+  { name: 'Oxxymiron', link: 'https://lastfm.freetls.fastly.net/i/u/770x0/f644836eef0c2c048c30079c842c9a57.jpg'}
+];
+
+function closePopup(popup) {
+  popup.classList.remove('popup_open');
+  window.removeEventListener('keydown', closePopupOnEsc);
+}
+
+function openPopup(popup) {
+  popup.classList.add('popup_open');
+  window.addEventListener('keydown', closePopupOnEsc);
+}
+
+function closePopupOnEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_open');
+    const form = popup.querySelector('.popup__form');
+    closePopup(popup);
+    if (form !== null) form.reset();
   }
-]; 
+}
+
+function closePopupByClickOverlay (evt) {
+  const popup = document.querySelector('.popup_open');
+  const form = popup.querySelector('.popup__form');
+  if (evt.target === popup) {
+    closePopup (popup);
+    if (form !== null) form.reset();
+  }
+}
 
 function renderCard() {
   initialCards.forEach((item) => {
@@ -91,14 +102,9 @@ function addCard(evt) {
   evt.preventDefault();
 
   createCard(title.value, photo.value);
-
-  title.value = '';
-  photo.value = '';
+  newCardForm.reset();
+  toggleButton(newCardForm, config);
   closePopup(popupAddCard);
-}
-
-function openPopup(popup) {
-  popup.classList.add('popup_open');
 }
 
 function handleProfileFormSubmit(evt) {
@@ -108,18 +114,29 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfileEdit);
 }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_open');
-}
-
-newCardForm.addEventListener('submit', addCard);
-profileForm.addEventListener('submit', handleProfileFormSubmit);
-addButton.addEventListener('click', () => openPopup(popupAddCard));
-editButton.addEventListener('click', () => {
+editButton.addEventListener('click', (evt) => {
   nameInput.value = profileName.textContent;
   workInput.value = profileWork.textContent;
+  toggleButton(profileForm, config);
+  resetError(profileForm, config);
   openPopup(popupProfileEdit)
 });
-closeButtonProfile.addEventListener('click', () => closePopup(popupProfileEdit));
-closeButtonAddCard.addEventListener('click', () => closePopup(popupAddCard));
+
+closeButtonProfile.addEventListener('click', () => {  
+  closePopup(popupProfileEdit);
+  profileForm.reset();
+});
+
+closeButtonAddCard.addEventListener('click', () => {
+  closePopup(popupAddCard);
+  newCardForm.reset();
+});
+
+addButton.addEventListener('click', () => {
+  resetError(newCardForm, config);
+  openPopup(popupAddCard);
+});
+popups.forEach((popup) => popup.addEventListener('click', closePopupByClickOverlay));
+newCardForm.addEventListener('submit', addCard);
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 closeButtonImage.addEventListener('click', () => closePopup(popupImage));
