@@ -50,13 +50,14 @@ function closePopupOnEsc(evt) {
   }
 }
 
-function closePopupByClickOverlay (evt) {
-  const popup = document.querySelector('.popup_open');
+function closePopupByClickOverlay(evt) {
+  const popup = evt.target;
   const form = popup.querySelector('.popup__form');
-  if (evt.target === popup) {
-    closePopup (popup);
-    if (form !== null) form.reset();
+  if (popup !== evt.currentTarget) {
+    return;
   }
+  closePopup(popup);
+  if (form !== null) form.reset();
 }
 
 function renderCard() {
@@ -103,7 +104,6 @@ function addCard(evt) {
 
   createCard(title.value, photo.value);
   newCardForm.reset();
-  toggleButton(newCardForm, config);
   closePopup(popupAddCard);
 }
 
@@ -117,8 +117,7 @@ function handleProfileFormSubmit(evt) {
 editButton.addEventListener('click', (evt) => {
   nameInput.value = profileName.textContent;
   workInput.value = profileWork.textContent;
-  toggleButton(profileForm, config);
-  resetError(profileForm, config);
+  resetInputErrors(profileForm);
   openPopup(popupProfileEdit)
 });
 
@@ -133,7 +132,7 @@ closeButtonAddCard.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', () => {
-  resetError(newCardForm, config);
+  resetInputErrors(newCardForm);
   openPopup(popupAddCard);
 });
 popups.forEach((popup) => popup.addEventListener('click', closePopupByClickOverlay));
