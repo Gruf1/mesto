@@ -113,7 +113,6 @@ function handleProfileFormSubmit(evt) {
 editButton.addEventListener('click', (evt) => {
   nameInput.value = profileName.textContent;
   workInput.value = profileWork.textContent;
-  resetInputErrors(profileForm);
   openPopup(popupProfileEdit)
 });
 
@@ -128,7 +127,6 @@ closeButtonAddCard.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', () => {
-  resetInputErrors(newCardForm);
   openPopup(popupAddCard);
 });
 popups.forEach((popup) => popup.addEventListener('click', closePopupByClickOverlay));
